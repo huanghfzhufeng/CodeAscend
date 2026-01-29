@@ -35,8 +35,14 @@ A fun application that calculates your "Cultivation Realm" based on GitHub profi
 ### 主界面 - 道行测试
 ![主界面截图](./frontend/coi/Snipaste_2026-01-29_21-36-31.png)
 
-### 封神榜
-![封神榜截图](./frontend/coi/Snipaste_2026-01-29_21-36-44.png)
+### 境界详情
+![境界详情](./frontend/coi/image.png)
+
+### 斗法场
+![斗法场](./frontend/coi/image%20copy.png)
+
+### 渡劫计算器
+![渡劫计算器](./frontend/coi/image%20copy%202.png)
 
 ## 技术栈
 
