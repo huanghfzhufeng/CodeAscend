@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// GitHub 用户缓存表
+model GithubUser {
+  id          Int      @id @default(autoincrement())
+  githubId    Int      @unique @map("github_id")
+  login       String   @db.VarChar(100)
+  name        String?  @db.VarChar(200)
+  avatarUrl   String?  @map("avatar_url")
+  bio         String?
+  publicRepos Int      @default(0) @map("public_repos")
+  publicGists Int      @default(0) @map("public_gists")
+  followers   Int      @default(0)
+  following   Int      @default(0)
+  createdAt   DateTime @map("github_created_at")
+  fetchedAt   DateTime @default(now()) @map("fetched_at")
+
+  cultivationRecords CultivationRecord[]
+  searchHistory      SearchHistory[]
+
+  @@map("github_users")
+}
+
+// 修仙记录表
+model CultivationRecord {
+  id             Int      @id @default(autoincrement())
+  githubUserId   Int      @map("github_user_id")
+  totalScore     Int      @map("total_score")
+  rankName       String   @map("rank_name") @db.VarChar(50)
+  cultivationRaw Int      @map("cultivation_raw")
+  reputationRaw  Int      @map("reputation_raw")
+  yearsActive    Int      @map("years_active")
+  calculatedAt   DateTime @default(now()) @map("calculated_at")
+
+  githubUser GithubUser @relation(fields: [githubUserId], references: [id], onDelete: Cascade)
+
+  @@map("cultivation_records")
+}
+
+// 搜索历史表
+model SearchHistory {
+  id           Int      @id @default(autoincrement())
+  githubUserId Int      @map("github_user_id")
+  searchedAt   DateTime @default(now()) @map("searched_at")
+  ipAddress    String?  @map("ip_address") @db.VarChar(50)
+
+  githubUser GithubUser @relation(fields: [githubUserId], references: [id], onDelete: Cascade)
+
+  @@map("search_history")
+}

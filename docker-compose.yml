@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  # PostgreSQL 数据库
+  postgres:
+    image: postgres:15-alpine
+    container_name: xiuxian-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: github_xiuxian
+    ports:
+      - "15432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 后端 API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: xiuxian-backend
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/github_xiuxian?schema=public
+      PORT: 3001
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+    ports:
+      - "13001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # 前端
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: xiuxian-frontend
+    ports:
+      - "18080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
