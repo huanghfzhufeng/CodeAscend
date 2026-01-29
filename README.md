@@ -1,13 +1,17 @@
-# GitHub 修仙阁
+# CodeAscend
 
-基于 GitHub 用户数据计算"修仙境界"的趣味应用。
+> Rise Through Code, Ascend Your Realm
 
-## 应用截图
+基于 GitHub 用户数据计算「修仙境界」的趣味应用。查看你的 GitHub 战力，登上封神榜！
 
-### 主界面 - 道行测试
+A fun application that calculates your "Cultivation Realm" based on GitHub profile data. Check your GitHub power level and climb the leaderboard!
+
+## Screenshots
+
+### Main - Realm Test
 ![主界面截图](./frontend/coi/Snipaste_2026-01-29_21-36-31.png)
 
-### 封神榜 - 排行榜
+### Leaderboard
 ![封神榜截图](./frontend/coi/Snipaste_2026-01-29_21-36-44.png)
 
 ## 技术栈

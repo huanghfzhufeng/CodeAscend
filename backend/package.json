@@ -1,7 +1,7 @@
 {
-  "name": "github-xiuxian-backend",
+"name": "codeascend-backend",
   "version": "1.0.0",
-  "description": "GitHub修仙阁后端API",
+  "description": "GitRealm Backend API",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
