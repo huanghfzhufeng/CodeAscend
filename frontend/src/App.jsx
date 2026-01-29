@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Search, Scroll, Wind, Sword, Zap, BookOpen, AlertCircle, Trophy, Crown, ExternalLink, Swords } from 'lucide-react';
+import { Search, Scroll, Wind, Sword, Zap, BookOpen, AlertCircle, Trophy, Crown, ExternalLink, Swords, Flame } from 'lucide-react';
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, Radar, Tooltip } from 'recharts';
 import { fetchUser, fetchLeaderboard } from './services/api';
 import BattleArena from './components/BattleArena';
+import TribulationCalculator from './components/TribulationCalculator';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('main'); // 'main' | 'battle'
+  const [currentPage, setCurrentPage] = useState('main'); // 'main' | 'battle' | 'tribulation'
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -96,7 +97,7 @@ export default function App() {
         </div>
         <div className="flex items-center gap-4">
           <button
-            onClick={() => setCurrentPage(currentPage === 'main' ? 'battle' : 'main')}
+            onClick={() => setCurrentPage(currentPage === 'battle' ? 'main' : 'battle')}
             className={`flex items-center gap-1 px-3 py-1.5 rounded text-sm font-bold transition-colors ${
               currentPage === 'battle' 
                 ? 'bg-stone-800 text-[#f0f0e8]' 
@@ -105,6 +106,17 @@ export default function App() {
           >
             <Swords className="w-4 h-4" />
             <span className="hidden sm:inline">斗法场</span>
+          </button>
+          <button
+            onClick={() => setCurrentPage(currentPage === 'tribulation' ? 'main' : 'tribulation')}
+            className={`flex items-center gap-1 px-3 py-1.5 rounded text-sm font-bold transition-colors ${
+              currentPage === 'tribulation' 
+                ? 'bg-orange-600 text-white' 
+                : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
+            }`}
+          >
+            <Flame className="w-4 h-4" />
+            <span className="hidden sm:inline">渡劫</span>
           </button>
           <span className="text-sm text-stone-500 hidden md:block">观天之道，执码而行</span>
           <a href="https://github.com/huanghfzhufeng/CodeAscend" target="_blank" rel="noopener noreferrer" className="text-stone-500 hover:text-stone-800 transition-colors" title="GitHub">
@@ -116,6 +128,11 @@ export default function App() {
       {/* 斗法场页面 */}
       {currentPage === 'battle' && (
         <BattleArena onBack={() => setCurrentPage('main')} leaderboard={leaderboard} />
+      )}
+
+      {/* 渡劫计算器页面 */}
+      {currentPage === 'tribulation' && (
+        <TribulationCalculator onBack={() => setCurrentPage('main')} leaderboard={leaderboard} />
       )}
 
       {/* 主页面 */}
